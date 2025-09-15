@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ perfil.nome }} - Versão Tradicional</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: #f4f4f4;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .section h2 {
+            color: #34495e;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        .contact-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        
+        .contact-links a {
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .contact-links a:hover {
+            background: #2980b9;
+        }
+        
+        .back-link {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .back-link a {
+            background: #95a5a6;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        
+        .back-link a:hover {
+            background: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ perfil.nome }}</h1>
+        <div class="subtitle">{{ perfil.titulo }}</div>
+        
+        <div class="section">
+            <h2>Sobre Mim</h2>
+            <p>{{ perfil.sobre }}</p>
+        </div>
+        
+        <div class="section">
+            <h2>Contato</h2>
+            <div class="contact-links">
+                <a href="{{ perfil.linkedin }}" target="_blank">LinkedIn</a>
+                <a href="{{ perfil.github }}" target="_blank">GitHub</a>
+                <a href="mailto:{{ perfil.email }}">Email</a>
+            </div>
+        </div>
+        
+        <div class="back-link">
+            <a href="/">← Voltar para Versão Gamificada</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,9 +1,37 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ perfil.nome }} - {{ perfil.titulo }}</title>
+    <title>{{ perfil.nome }} - {{ perfil.titulo }} | Portfólio Gamificado</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Portfólio gamificado de {{ perfil.nome }}, {{ perfil.titulo }}. Especialista em análise de dados, Python, Power BI e desenvolvimento de dashboards.">
+    <meta name="keywords" content="Victor Martins Silva, Analista Dados, Engenheiro Agrícola, Python, Power BI, QGIS, SolidWorks, Análise Dados">
+    <meta name="author" content="{{ perfil.nome }}">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N9MTJ3R7EJ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-N9MTJ3R7EJ', {
+            page_title: '{{ perfil.nome }} - {{ perfil.titulo }}',
+            page_location: window.location.href,
+            content_group1: 'Portfolio Gamificado'
+        });
+        
+        // Track events
+        function trackEvent(action, category, label) {
+            gtag('event', action, {
+                event_category: category,
+                event_label: label
+            });
+        }
+    </script>
+    
     <style>
         * {
             margin: 0;
@@ -11,147 +39,754 @@
             box-sizing: border-box;
         }
         
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #4ecdc4;
+            --text-primary: #ffffff;
+            --text-secondary: #b8c5d6;
+            --bg-primary: #0f1419;
+            --bg-secondary: #1a1f2e;
+            --bg-card: rgba(255, 255, 255, 0.1);
+            --border-color: rgba(255, 255, 255, 0.2);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: var(--text-primary);
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            overflow-x: hidden;
         }
         
         .container {
-            max-width: 800px;
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 350px;
+            background: var(--bg-secondary);
+            padding: 30px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+        }
+        
+        .profile-section {
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
         }
         
         .profile-img {
-            width: 150px;
-            height: 150px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 30px;
-            font-size: 60px;
+            margin: 0 auto 20px;
+            font-size: 50px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
         }
         
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            background: linear-gradient(45deg, #fff, #f0f0f0);
+        .profile-img:hover {
+            transform: scale(1.05);
+        }
+        
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(45deg, var(--text-primary), var(--accent-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
         
-        .subtitle {
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            opacity: 0.9;
-            color: #f0f0f0;
-        }
-        
-        .description {
+        .profile-title {
             font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 30px;
-            opacity: 0.8;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            font-weight: 500;
         }
         
-        .buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-        }
-        
-        .btn {
-            padding: 12px 25px;
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 25px;
-            color: #fff;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-        }
-        
-        .btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-        
-        .status {
-            background: rgba(0, 255, 0, 0.2);
-            border: 1px solid rgba(0, 255, 0, 0.3);
-            padding: 10px 20px;
+        .profile-level {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 15px;
             border-radius: 15px;
-            display: inline-block;
+            margin-bottom: 20px;
+        }
+        
+        .level-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .level-text {
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+        
+        .xp-bar {
+            background: rgba(255, 255, 255, 0.1);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .xp-fill {
+            background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
+            height: 100%;
+            width: 75%;
+            border-radius: 4px;
+            transition: width 0.8s ease;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-2px);
+        }
+        
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+        
+        .contact-links {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        
+        .contact-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-btn:hover {
+            background: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
             margin-top: 20px;
         }
         
-        .footer {
-            margin-top: 30px;
-            opacity: 0.7;
+        .badge {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 350px;
+            padding: 30px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .main-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--text-primary), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+        
+        /* Cards */
+        .cards-container {
+            display: grid;
+            gap: 25px;
+        }
+        
+        .accordion-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+        
+        .accordion-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .card-header {
+            padding: 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .card-header:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .card-icon {
+            font-size: 1.5rem;
+        }
+        
+        .card-toggle {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .card-content {
+            padding: 0 25px 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .card-content.active {
+            max-height: 1000px;
+            padding: 0 25px 25px;
+        }
+        
+        .card-toggle.active {
+            transform: rotate(180deg);
+        }
+        
+        /* Experience Cards */
+        .experience-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .experience-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(10px);
+        }
+        
+        .exp-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .exp-icon {
+            font-size: 2rem;
+        }
+        
+        .exp-info h3 {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .exp-company {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+        
+        .exp-period {
+            color: var(--text-secondary);
             font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .exp-description {
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        
+        /* Skills Grid */
+        .skills-category {
+            margin-bottom: 25px;
+        }
+        
+        .category-title {
+            color: var(--accent-color);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+        }
+        
+        .skill-tag {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
+            padding: 10px 15px;
+            border-radius: 25px;
+            text-align: center;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .skill-tag:hover {
+            background: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        /* Projects */
+        .project-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .project-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .project-title {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .project-description {
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .tech-tag {
+            background: var(--bg-secondary);
+            color: var(--accent-color);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .project-link {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .project-link:hover {
+            color: var(--text-primary);
+        }
+        
+        /* Layout Toggle */
+        .layout-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+        
+        .layout-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+        
+        .layout-btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 300px;
+            }
+            
+            .main-content {
+                margin-left: 300px;
+            }
         }
         
         @media (max-width: 768px) {
-            .container {
-                margin: 20px;
-                padding: 30px 20px;
+            .sidebar {
+                position: fixed;
+                left: -350px;
+                width: 350px;
+                transition: left 0.3s ease;
+                z-index: 1001;
             }
             
-            h1 {
+            .sidebar.active {
+                left: 0;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            
+            .main-title {
                 font-size: 2rem;
             }
             
-            .buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .btn {
-                width: 200px;
+            .stats-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="profile-img">👨‍💼</div>
-        
-        <h1>{{ perfil.nome }}</h1>
-        <div class="subtitle">{{ perfil.titulo }}</div>
-        
-        <p class="description">{{ perfil.sobre }}</p>
-        
-        <div class="buttons">
-            <a href="{{ perfil.linkedin }}" class="btn" target="_blank">LinkedIn</a>
-            <a href="{{ perfil.github }}" class="btn" target="_blank">GitHub</a>
-            <a href="mailto:{{ perfil.email }}" class="btn">Email</a>
-            <a href="/backup" class="btn">Versão Tradicional</a>
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="profile-section">
+                <div class="profile-img">👨‍💼</div>
+                <h1 class="profile-name">{{ perfil.nome }}</h1>
+                <p class="profile-title">{{ perfil.titulo }}</p>
+                
+                <div class="profile-level">
+                    <div class="level-info">
+                        <span class="level-text">Nível Especialista</span>
+                        <span class="level-text">75%</span>
+                    </div>
+                    <div class="xp-bar">
+                        <div class="xp-fill"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number">{{ experiencias|length }}</span>
+                    <span class="stat-label">Experiências</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">{{ projetos|length }}</span>
+                    <span class="stat-label">Projetos</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">{{ certificacoes|length }}</span>
+                    <span class="stat-label">Certificações</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">7+</span>
+                    <span class="stat-label">Anos Exp.</span>
+                </div>
+            </div>
+            
+            <div class="contact-links">
+                <a href="{{ perfil.linkedin }}" class="contact-btn" target="_blank" onclick="trackEvent('click', 'contact', 'linkedin')">💼</a>
+                <a href="{{ perfil.github }}" class="contact-btn" target="_blank" onclick="trackEvent('click', 'contact', 'github')">🐙</a>
+                <a href="mailto:{{ perfil.email }}" class="contact-btn" onclick="trackEvent('click', 'contact', 'email')">✉️</a>
+                <a href="{{ perfil.whatsapp }}" class="contact-btn" target="_blank" onclick="trackEvent('click', 'contact', 'whatsapp')">💬</a>
+            </div>
+            
+            <div class="badges">
+                {% for cert in certificacoes %}
+                <span class="badge">{{ cert.nome }}</span>
+                {% endfor %}
+            </div>
         </div>
         
-        <div class="status">
-            ✅ Portfólio Online e Funcionando!
-        </div>
-        
-        <div class="footer">
-            Desenvolvido com Flask + Vercel<br>
-            © 2024 {{ perfil.nome }}
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h2 class="main-title">Victor Martins Portfólio</h2>
+                <p class="subtitle">Analista de Dados & Engenheiro Agrícola</p>
+            </div>
+            
+            <div class="cards-container">
+                <!-- Card 1: Sobre Mim -->
+                <div class="accordion-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <div class="card-title">
+                            <span class="card-icon">👨‍💻</span>
+                            <span>Sobre Mim</span>
+                        </div>
+                        <span class="card-toggle active">▼</span>
+                    </div>
+                    <div class="card-content active">
+                        <p>{{ perfil.sobre }}</p>
+                        <br>
+                        <p><strong>📍 Localização:</strong> {{ perfil.localizacao }}</p>
+                        <p><strong>📧 Email:</strong> {{ perfil.email }}</p>
+                        <p><strong>📱 Telefone:</strong> {{ perfil.telefone }}</p>
+                    </div>
+                </div>
+                
+                <!-- Card 2: Experiência Profissional -->
+                <div class="accordion-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <div class="card-title">
+                            <span class="card-icon">💼</span>
+                            <span>Experiência Profissional</span>
+                        </div>
+                        <span class="card-toggle">▼</span>
+                    </div>
+                    <div class="card-content">
+                        {% for exp in experiencias %}
+                        <div class="experience-item">
+                            <div class="exp-header">
+                                <span class="exp-icon">{{ exp.icone }}</span>
+                                <div class="exp-info">
+                                    <h3>{{ exp.cargo }}</h3>
+                                    <p class="exp-company">{{ exp.empresa }}</p>
+                                </div>
+                            </div>
+                            <p class="exp-period">{{ exp.periodo }}</p>
+                            <p class="exp-description">{{ exp.descricao }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <!-- Card 3: Competências -->
+                <div class="accordion-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <div class="card-title">
+                            <span class="card-icon">⚡</span>
+                            <span>Competências Técnicas</span>
+                        </div>
+                        <span class="card-toggle">▼</span>
+                    </div>
+                    <div class="card-content">
+                        {% for categoria, dados in competencias.items() %}
+                        <div class="skills-category">
+                            <h3 class="category-title">
+                                <span>🔹</span>
+                                {{ dados.nome }}
+                            </h3>
+                            <div class="skills-grid">
+                                {% for skill in dados.skills %}
+                                <div class="skill-tag">{{ skill }}</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <!-- Card 4: Projetos -->
+                <div class="accordion-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <div class="card-title">
+                            <span class="card-icon">🚀</span>
+                            <span>Projetos Destacados</span>
+                        </div>
+                        <span class="card-toggle">▼</span>
+                    </div>
+                    <div class="card-content">
+                        {% for projeto in projetos %}
+                        <div class="project-item">
+                            <h3 class="project-title">{{ projeto.nome }}</h3>
+                            <p class="project-description">{{ projeto.descricao }}</p>
+                            <div class="project-tech">
+                                {% for tech in projeto.tecnologias %}
+                                <span class="tech-tag">{{ tech }}</span>
+                                {% endfor %}
+                            </div>
+                            <a href="{{ projeto.github }}" class="project-link" target="_blank">🔗 Ver no GitHub</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <!-- Card 5: Educação -->
+                <div class="accordion-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <div class="card-title">
+                            <span class="card-icon">🎓</span>
+                            <span>Formação Acadêmica</span>
+                        </div>
+                        <span class="card-toggle">▼</span>
+                    </div>
+                    <div class="card-content">
+                        {% for edu in educacao %}
+                        <div class="experience-item">
+                            <div class="exp-header">
+                                <span class="exp-icon">🏛️</span>
+                                <div class="exp-info">
+                                    <h3>{{ edu.curso }}</h3>
+                                    <p class="exp-company">{{ edu.instituicao }}</p>
+                                </div>
+                            </div>
+                            <p class="exp-period">{{ edu.periodo }} - {{ edu.tipo }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <!-- Card 6: Idiomas -->
+                <div class="accordion-card">
+                    <div class="card-header" onclick="toggleCard(this)">
+                        <div class="card-title">
+                            <span class="card-icon">🌍</span>
+                            <span>Idiomas</span>
+                        </div>
+                        <span class="card-toggle">▼</span>
+                    </div>
+                    <div class="card-content">
+                        {% for codigo, idioma in idiomas.items() %}
+                        <div class="experience-item">
+                            <div class="exp-info">
+                                <h3>{{ idioma.nome }}</h3>
+                                <p class="exp-company">{{ idioma.nivel }}</p>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.1); height: 8px; border-radius: 4px; margin-top: 10px;">
+                                <div style="background: linear-gradient(45deg, #4ecdc4, #667eea); height: 100%; width: {{ idioma.porcentagem }}%; border-radius: 4px;"></div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    
+    <!-- Layout Toggle Button -->
+    <div class="layout-toggle">
+        <button class="layout-btn" onclick="window.location.href='/backup'">
+            📄 Versão Tradicional
+        </button>
+    </div>
+    
+    <script>
+        function toggleCard(header) {
+            const content = header.nextElementSibling;
+            const toggle = header.querySelector('.card-toggle');
+            
+            content.classList.toggle('active');
+            toggle.classList.toggle('active');
+            
+            // Track accordion interaction
+            trackEvent('accordion_toggle', 'interaction', header.querySelector('.card-title span:last-child').textContent);
+        }
+        
+        // Initialize first card as open
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate stats on load
+            setTimeout(() => {
+                document.querySelectorAll('.stat-number').forEach(stat => {
+                    stat.style.animation = 'fadeInUp 0.8s ease-out';
+                });
+            }, 500);
+        });
+    </script>
 </body>
 </html>
